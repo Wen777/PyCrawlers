@@ -5,7 +5,6 @@ import requests
 import csv
 import re
 
-# def get_stock_quotes(stock=None, date_start=False, date_end=False):
 def get_stock_quotes(stock, date_start, date_end):
     """
     get_stock_quotes(stock, date1, date2) will return the tables consist of daily trading data found on Yahoo!  Finance
@@ -87,12 +86,10 @@ DAYlist = qoutes_valid_day()
 
 def verify_day(date):
     pattern = re.compile("[0-9]{4}/[0-9]{2}/[0-9]{2}")
-#     df_list, year, month, day= [], [], [], []
     assert isinstance( date, str), "date must be sting"
     match = pattern.match(date)
     assert not match is None, "Wrong format of date. Date must be of yyyy/mm/dd format."
     year, month, day= date.split("/")
-#     print year, month, day
     if (year + month + day) in DAYlist:
         return year + month + day, "True"
     else:

@@ -15,14 +15,14 @@ def get_daily_history_taifex(start_date, end_date):
     match1 = pattern.match(start_date)
     match2 = pattern.match(end_date)
     assert not (match1 is None or match2 is None), "Wrong format of date. Date must be of yyyy/mm/dd format."
-    
+
     time_tuple1 = time.strptime('{start_date} 0:0:0'.format(start_date = start_date), '%Y/%m/%d %H:%M:%S')
     time_in_sec1 = time.mktime(time_tuple1)
     time_tuple2= time.strptime('{end_date} 23:59:59'.format(end_date = end_date), '%Y/%m/%d %H:%M:%S')
     time_in_sec2 = time.mktime(time_tuple2)
     dur = time_in_sec2 - time_in_sec1 + 1
     assert dur <= 2592000.0, "Can not query data longer than 30 days."
-    
+
     req_data = {"DATA_DATE":start_date,
                 "DATA_DATE1":end_date,
                 "COMMODITY_ID":"all",
@@ -48,7 +48,7 @@ def get_annual_history_taifex(year, cache = False):
     pattern = re.compile("[0-9]{4}")
     match = pattern.match(year)
     assert not match is None, "Wrong format of year. Year must be of yyyy format."
-    
+
     temp_path = tempfile.mkdtemp("_pycrawlers", "taifex_")
     url = "http://www.taifex.com.tw/eng/eng3/hisdata_fut/{year}_fut.zip".format(year = year)
     res = requests.get(url, stream = True)
